@@ -50,7 +50,7 @@ end
             puts token
             session[:token] = token
             flash[:success] = "you are login successfully"
-            redirect_to index_path
+            redirect_to manager_index_path
         end
     end
 

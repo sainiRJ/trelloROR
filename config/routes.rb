@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get '/employee/login', to: 'employees#login_form'
   post '/employee/login', to: 'employees#login'
 
-  resources :managers, only: [:index, :show]
 
   root 'managers#index'
   get 'manager/index', to: 'managers#index'
@@ -22,8 +21,16 @@ Rails.application.routes.draw do
 
   get '/task', to: 'tasks#new'
   post '/task', to: 'tasks#create'
+  get '/index', to: 'tasks#index'
 
 
-
-  
+#  get '/edit/task', to: 'tasks#edit'
+ post '/tasks/:id/edit', to: 'tasks#update'
+ 
+ resources :tasks do
+  member do
+    post 'move_to_next_status'
+  end
+end
+# post '/tasks/:id/move_to_next_status_task', to: 'tasks#move_to_next_status'
 end

@@ -1,0 +1,124 @@
+<style>
+  
+
+body{
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0 ;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.status-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.status-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+.status-card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.status-card p {
+  font-size: 18px;
+  color: #333;
+}
+
+/* Define different card colors for different statuses */
+.status-card.to-do {
+  background-color: #ffcccb;
+}
+
+.status-card.in-progress {
+  background-color: #ffd700;
+}
+
+.status-card.review {
+  background-color: #add8e6;
+}
+
+.status-card.done {
+  background-color: #90ee90;
+}
+</style>
+
+<div class="status-card to-do">
+  <h6>To Do</h6>
+<% @to_do_tasks.each do |task| %>
+<div class="task-container">
+  <h5 class="task-title">Task: <%= task.title %></h5>
+  <h5 class="task-description">Description: <%= task.description %></h5>
+  <ul class="employee-list">
+    <% task.employees.each do |employee| %>
+      <li class="employee-item"><%= employee.name %></li>
+    <% end %>
+  </ul>
+  <%= link_to 'Edit Task', edit_task_path(task), class: 'btn btn-primary edit-button' %>
+  <%= link_to 'Move to Next Status', move_to_next_status_task_path(task), method: :post, class: 'btn btn-primary' %>
+</div>
+<% end %>
+</div>
+
+
+<div class="status-card in-progress">
+  <h6>In Progress Task</h6>
+  <%  @in_progress_tasks .each do |task| %>
+  <div class="task-container">
+    <h5 class="task-title">Task: <%= task.title %></h5>
+    <h5 class="task-description">Description: <%= task.description %></h5>
+    <ul class="employee-list">
+      <% task.employees.each do |employee| %>
+        <li class="employee-item"><%= employee.name %></li>
+      <% end %>
+    </ul>
+    <%= link_to 'Edit Task', edit_task_path(task), class: 'btn btn-primary edit-button' %>
+    <%= link_to 'Move to Next Status', move_to_next_status_task_path(task), method: :post, class: 'btn btn-primary' %>
+  </div>
+  <% end %>
+</div>
+
+  
+  <div class="status-card review">
+    <h6>Review Task</h6>
+    <%  @review_tasks .each do |task| %>
+    <div class="task-container">
+      <h5 class="task-title">Task: <%= task.title %></h5>
+      <h5 class="task-description">Description: <%= task.description %></h5>
+      <ul class="employee-list">
+        <% task.employees.each do |employee| %>
+          <li class="employee-item"><%= employee.name %></li>
+        <% end %>
+      </ul>
+      <%= link_to 'Edit Task', edit_task_path(task), class: 'btn btn-primary edit-button' %>
+    </div>
+    <% end %>
+  </div>
+
+    <div class="status-card done">
+      <h6>Done Task</h6>
+      <%   @done_tasks .each do |task| %>
+      <div class="task-container">
+        <h5 class="task-title">Task: <%= task.title %></h5>
+        <h5 class="task-description">Description: <%= task.description %></h5>
+        <ul class="employee-list">
+          <% task.employees.each do |employee| %>
+            <li class="employee-item"><%= employee.name %></li>
+          <% end %>
+        </ul>
+        <%= link_to 'Edit Task', edit_task_path(task), class: 'btn btn-primary edit-button' %>
+      </div>
+      <% end %>
+ </div>

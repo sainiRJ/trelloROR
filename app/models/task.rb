@@ -1,4 +1,7 @@
 class Task < ApplicationRecord
-  belongs_to :employee
-  # enum status: { draft: 0, submitted: 1, approved: 2, rejected: 3 }
+  has_and_belongs_to_many :employees
+  attr_accessor :employee_ids_to_add, :employee_ids_to_remove
+  STATUS_OPTIONS = ['To Do', 'In Progress', 'Review', 'Done'].freeze
+  validates :status, inclusion: { in: STATUS_OPTIONS }
+
 end
