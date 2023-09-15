@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="card mt-4 mb-4">
+          <div class="card-body">
+            <h2 class="text-center">Register New employee</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <% if flash.any? %>
+      <% flash.each do |type, msg| %>
+        <div class="alert alert-<%= type %> text-center">
+          <%= msg %>
+        </div>
+      <% end %>
+    <% end %>
+  
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <%= form_for @employee, url: employee_register_path, method: :post, class: "form-container" do |f| %>
+          <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+  
+          <div class="form-group">
+            <%= f.label :mobile_number %>
+            <%= f.text_field :mobile_number, class: "form-control" %>
+          </div>
+  
+          <div class="form-group">
+            <%= f.label :email %>
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
+  
+          <div class="form-group">
+            <%= f.label :password %>
+            <%= f.password_field :password, class: "form-control" %>
+          </div>
+  
+          <div class="form-group">
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation, class: "form-control" %>
+          </div>
+  
+          <div class="form-group text-center">
+            <%= f.submit "Register", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
