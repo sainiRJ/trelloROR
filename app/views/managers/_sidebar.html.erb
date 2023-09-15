@@ -1,0 +1,59 @@
+<%= stylesheet_link_tag 'sidebar', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+   <!-- app/views/shared/_sidebar.html.erb -->
+<!-- app/views/layouts/application.html.erb -->
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Your head content -->
+</head>
+<body>
+  <!-- Navbar with a toggle button -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <button id="sidebar-toggle" class="btn">Toggle Sidebar</button>
+    </div>
+  </nav>
+
+  <!-- Include the sidebar partial -->
+<!-- app/views/shared/_sidebar.html.erb -->
+<div id="sidebar">
+  <div class="sidebar-content">
+    <h3>Sidebar Menu</h3>
+    <ul>
+      <li><%= link_to "Home", manager_login_path %></li>
+      <li><%= link_to "About", manager_login_path %></li>
+      <!-- Add more links or content here -->
+    </ul>
+
+    <h3>Categories</h3>
+    <ul>
+      <li><%= link_to "Category 1", manager_login_path %></li>
+      <li><%= link_to "Category 2", manager_register_path %></li>
+      <!-- Add more category links here -->
+    </ul>
+
+    <!-- Additional sidebar content -->
+    <div class="additional-content">
+      <p>This is some additional content in the sidebar.</p>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Your main content -->
+  <div id="main-content">
+    <%= yield %>
+  </div>
+
+  <!-- JavaScript for sidebar toggle -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#sidebar-toggle").click(function() {
+        $("#sidebar").toggleClass("open");
+      });
+    });
+  </script>
+</body>
+</html>
