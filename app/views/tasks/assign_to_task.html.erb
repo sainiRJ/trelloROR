@@ -1,0 +1,29 @@
+<% if flash.any? %>
+    <% flash.each do |type, msg| %>
+      <div class="alert alert-<%= type %> text-center">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+
+<h2>Assign Employee <%= @employee.name %> to Tasks</h2>
+
+<%= form_for @employee, url: assign_to_task_path, method: :post do |f| %>
+  <h3>Add Employee to Tasks:</h3>
+  <% @tasks.each do |task| %>
+    <div class="form-check">
+      <%= f.check_box :task_ids, { multiple: true }, task.id, nil %>
+      <%= f.label "employee_task_ids_#{task.id}", task.title %>
+    </div>
+  <% end %>
+
+  <h3>Remove Employee from Tasks:</h3>
+  <% @employee.tasks.each do |task| %>
+    <div class="form-check">
+      <%= f.check_box :task_ids, { multiple: true }, task.id, nil, { checked: true } %>
+      <%= f.label "employee_task_ids_#{task.id}", "Remove from #{task.title}" %>
+    </div>
+  <% end %>
+
+  <%= f.submit 'Save Changes' %>
+<% end %>

@@ -1,0 +1,36 @@
+/* app/assets/stylesheets/application.css.scss */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+  }
+  
+  .navbar-content {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  /* app/assets/stylesheets/application.css.scss */
+#sidebar {
+    background-color: #333;
+    color: #fff;
+    width: 250px;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: -250px; /* Offscreen by default */
+    transition: left 0.3s ease-in-out; /* Add a smooth transition effect */
+  }
+  
+  #sidebar.open {
+    left: 0; /* Show the sidebar when the 'open' class is applied */
+  }
+  

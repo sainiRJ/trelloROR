@@ -1,0 +1,43 @@
+<% if flash.any? %>
+    <% flash.each do |type, msg| %>
+      <div class="alert alert-<%= type %> text-center">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+
+<div class="container">
+    <h1>Create a New Form</h1>
+  
+    <%= form_for @task, url: task_path, method: :post, local: true do |f| %>
+      <div class="form-group">
+        <%= f.label :title, "Title" %>
+        <%= f.text_field :title, class: "form-control", placeholder: "Enter a title" %>
+      </div>
+  
+      <div class="form-group">
+        <%= f.label :description, "Description" %>
+        <%= f.text_area :description, class: "form-control", placeholder: "Enter a description" %>
+      </div>
+  
+      <div class="form-group">
+        <%= f.label :employee_id, "Employee" %>
+        <% Employee.all.each do |employee| %>
+        <div class="form-check">
+          <%= f.check_box :employee_ids, { multiple: true }, employee.id, nil %>
+          <%= f.label "task_employee_ids_#{employee.id}", employee.name %>
+        </div>
+      <% end %>
+      </div>
+     
+  
+      <div class="form-group">
+        <%= f.label :status, "Status" %>
+        <%= f.select :status, ['To Do', 'In Progress', 'Review', 'Done'], {}, class: "form-control" %>
+
+      </div>
+  
+      <%= f.submit "Create Form", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  
