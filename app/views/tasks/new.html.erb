@@ -1,0 +1,28 @@
+<div class="container">
+    <h1>Create a New Form</h1>
+  
+    <%= form_with model: @form, local: true do |f| %>
+      <div class="form-group">
+        <%= f.label :title, "Title" %>
+        <%= f.text_field :title, class: "form-control", placeholder: "Enter a title" %>
+      </div>
+  
+      <div class="form-group">
+        <%= f.label :description, "Description" %>
+        <%= f.text_area :description, class: "form-control", placeholder: "Enter a description" %>
+      </div>
+  
+      <div class="form-group">
+        <%= f.label :employee, "Employee" %>
+        <%= f.text_field :employee, class: "form-control", placeholder: "Enter the employee's name" %>
+      </div>
+  
+      <div class="form-group">
+        <%= f.label :status, "Status" %>
+        <%= f.text_field :status, class: "form-control", placeholder: "Enter status of Task" %>
+      </div>
+  
+      <%= f.submit "Create Form", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  
