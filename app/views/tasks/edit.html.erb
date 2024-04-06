@@ -1,0 +1,52 @@
+
+<div class="container">
+    <h1>Create a New Form</h1>
+  
+    <%= form_for @task, url: edit_task_path, method: :post, local: true do |f| %>
+      <div class="form-group">
+        <%= f.label :title, "Title" %>
+        <%= f.text_field :title, class: "form-control", placeholder: "Enter a title" %>
+      </div>
+  
+      <div class="form-group">
+        <%= f.label :description, "Description" %>
+        <%= f.text_area :description, class: "form-control", placeholder: "Enter a description" %>
+      </div>
+  
+      <div class="form-group">
+        <%= f.label :employee_id, "Employees to Add" %>
+<% employees_to_add = Employee.all.select { |employee| !@task.employees.include?(employee) } %>
+<% if employees_to_add.any? %>
+  <% employees_to_add.each do |employee| %>
+    <div class="form-check">
+      <%= f.check_box :employee_ids_to_add, { multiple: true }, employee.id, nil %>
+      <%= f.label "task_employee_ids_to_add_#{employee.id}", "Add #{employee.name}" %>
+    </div>
+  <% end %>
+<% else %>
+  <p>No employees available to add.</p>
+<% end %>
+
+<%= f.label :employee_id, "Employees to Remove" %>
+<% if @task.employees.any? %>
+  <% @task.employees.each do |employee| %>
+    <div class="form-check">
+      <%= f.check_box :employee_ids_to_remove, { multiple: true }, employee.id, nil %>
+      <%= f.label "task_employee_ids_to_remove_#{employee.id}", "Remove #{employee.name}" %>
+    </div>
+  <% end %>
+<% else %>
+  <p>No employees assigned to this task.</p>
+<% end %>        
+      </div>
+     
+  
+      <div class="form-group">
+        <%= f.label :status, "Status" %>
+        <%= f.select :status, ['To Do', 'In Progress', 'Review', 'Done'], {}, class: "form-control" %>
+      </div>
+  
+      <%= f.submit "Update", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  
