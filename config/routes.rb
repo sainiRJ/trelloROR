@@ -30,6 +30,10 @@ Rails.application.routes.draw do
  resources :tasks do
   member do
     post 'move_to_next_status'
+    get 'move_to_next_status'
+    post 'move_to_done'
+    get 'move_to_done'
+
   end
 end
 # post '/tasks/:id/move_to_next_status_task', to: 'tasks#move_to_next_status'

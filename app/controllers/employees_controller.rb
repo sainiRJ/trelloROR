@@ -1,3 +1,5 @@
+require_relative "../../lib/json_web_token"
+require 'securerandom'
 class EmployeesController < ApplicationController
   def new
     @employee = Employee.new
@@ -47,10 +49,9 @@ end
         if @employee && @employee.authenticate(password)
             payload={ employee_id: @employee.id}
             token = ::JsonWebToken.encode(payload)
-            puts token
             session[:token] = token
             flash[:success] = "you are login successfully"
-            redirect_to manager_index_path
+            redirect_to index_path
         end
     end
 

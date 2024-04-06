@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
-    before_action :authorize_manager, only: [:new, :create, :edit, :update]
+    before_action :authorize_manager, only: [:new, :create, :edit, :update, :move_to_done]
+    before_action :authorize_employee, only: [:move_to_next_status]
+
   
     def index
       @to_do_tasks = Task.where(status: 'To Do')
@@ -36,6 +38,13 @@ class TasksController < ApplicationController
     def move_to_next_status
       @task = Task.find(params[:id])
       
+      @task.employees.each do |employee|
+        if @current_employee.id == employee.id
+          @temp = 1
+        end 
+      end
+
+      if @temp.present?
       case @task.status
       when 'To Do'
         @task.status = 'In Progress'
@@ -47,15 +56,33 @@ class TasksController < ApplicationController
     
       if @task.save
         flash[:success] = 'Task moved to the next status.'
+      redirect_to index_path
+
       else
         flash[:error] = 'Failed to move the task.'
-      end
-    
       redirect_to index_path
+      end  
+   end
     end
     
+    def move_to_done
+      @task = Task.find(params[:id])
+      case @task.status
+      when 'Review'
+        @task.status = 'Done'
+      else  
+        flash[:error] = 'you are not allowed'
+        redirect_to index_path
+      end
+      if @task.save
+        flash[:success] = 'Task moved to the next status.'
+      redirect_to index_path
 
-
+      else
+        flash[:error] = 'Failed to move the task.'
+      redirect_to index_path
+    end   
+    end
   
     def update
       @task = Task.find(params[:id])
@@ -91,7 +118,8 @@ class TasksController < ApplicationController
     
     def authorize_manager
       token = session[:token]
-      if token==nil
+      puts "token #{token}"
+      if !token.present?
         flash[:warning] = "please login first"
         redirect_to manager_login_path
       else
@@ -104,6 +132,22 @@ class TasksController < ApplicationController
       end
       end
     end
+
+  def authorize_employee
+    token = session[:token]
+      if token==nil
+        flash[:warning] = "please login first"
+        redirect_to employee_login_path
+      else
+      verify = ::JsonWebToken.decode(token)
+      id = verify['employee_id']
+      @current_employee = Employee.find_by(id: id)
+      if @current_employee.nil?
+        flash[:warning] = "You are unauthorize user"
+        redirect_to index_path
+      end
+      end
+  end 
 
     def task_params
       params.require(:task).permit(:title, :description, :status, employee_ids: [])
